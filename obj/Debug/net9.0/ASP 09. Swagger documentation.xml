@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ASP 09. Swagger documentation</name>
+    </assembly>
+    <members>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.CustomerDTOs.CustomerResponseDto.Id">
+            <summary>Идентификатор</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.CustomerDTOs.CustomerResponseDto.Name">
+            <summary>Имя</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.CustomerDTOs.CustomerResponseDto.Address">
+            <summary>Адрес</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.CustomerDTOs.CustomerResponseDto.Email">
+            <summary>Email</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.CustomerDTOs.CustomerResponseDto.PhoneNumber">
+            <summary>Телефон</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.CustomerDTOs.CustomerResponseDto.CreatedAt">
+            <summary>Дата создания</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.CustomerDTOs.CustomerResponseDto.UpdatedAt">
+            <summary>Дата обновления</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.CustomerDTOs.CustomerResponseDto.DeletedAt">
+            <summary>Дата архивации (null если активен)</summary>
+        </member>
+        <member name="T:ASP_09._Swagger_documentation.DTOs.InvoiceDTOs.CreateInvoiceDto">
+            <summary>Данные для создания инвойса</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.InvoiceDTOs.CreateInvoiceDto.CustomerId">
+            <summary>ID клиента</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.InvoiceDTOs.CreateInvoiceDto.StartDate">
+            <summary>Начало периода работ</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.InvoiceDTOs.CreateInvoiceDto.EndDate">
+            <summary>Конец периода работ</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.InvoiceDTOs.CreateInvoiceDto.Rows">
+            <summary>Строки инвойса</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.InvoiceDTOs.CreateInvoiceDto.Comment">
+            <summary>Комментарий</summary>
+        </member>
+        <member name="T:ASP_09._Swagger_documentation.DTOs.InvoiceDTOs.CreateInvoiceRowDto">
+            <summary>Строка инвойса при создании</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.InvoiceDTOs.CreateInvoiceRowDto.Service">
+            <summary>Название работы</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.InvoiceDTOs.CreateInvoiceRowDto.Quantity">
+            <summary>Количество единиц</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.InvoiceDTOs.CreateInvoiceRowDto.Rate">
+            <summary>Стоимость единицы</summary>
+        </member>
+        <member name="T:ASP_09._Swagger_documentation.DTOs.InvoiceDTOs.InvoiceResponseDto">
+            <summary>Данные инвойса</summary>
+        </member>
+        <member name="T:ASP_09._Swagger_documentation.DTOs.InvoiceDTOs.InvoiceRowResponseDto">
+            <summary>Строка инвойса</summary>
+        </member>
+        <member name="T:ASP_09._Swagger_documentation.DTOs.InvoiceDTOs.UpdateInvoiceDto">
+            <summary>Данные для редактирования инвойса</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.InvoiceDTOs.UpdateInvoiceDto.StartDate">
+            <summary>Начало периода работ</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.InvoiceDTOs.UpdateInvoiceDto.EndDate">
+            <summary>Конец периода работ</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.InvoiceDTOs.UpdateInvoiceDto.Rows">
+            <summary>Строки инвойса</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.InvoiceDTOs.UpdateInvoiceDto.Comment">
+            <summary>Комментарий</summary>
+        </member>
+        <member name="T:ASP_09._Swagger_documentation.DTOs.InvoiceDTOs.UpdateInvoiceStatusDto">
+            <summary>Смена статуса инвойса</summary>
+        </member>
+        <member name="T:ASP_09._Swagger_documentation.Migrations.Initial">
+            <inheritdoc />
+        </member>
+        <member name="M:ASP_09._Swagger_documentation.Migrations.Initial.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ASP_09._Swagger_documentation.Migrations.Initial.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ASP_09._Swagger_documentation.Migrations.Initial.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>

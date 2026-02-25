@@ -1,0 +1,6 @@
+@ASP_09._Swagger_documentation_HostAddress = http://localhost:5127
+
+GET {{ASP_09._Swagger_documentation_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
