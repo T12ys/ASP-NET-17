@@ -9,6 +9,7 @@ public interface IInvoiceService
     Task<InvoiceResponseDto> CreateAsync(CreateInvoiceDto dto);
     Task<InvoiceResponseDto?> GetByIdAsync(int id);
     Task<IEnumerable<InvoiceResponseDto>> GetAllAsync();
+    Task<InvoicePagedResponseDto> GetPagedAsync(GetInvoicesQueryDto query);
     Task<InvoiceResponseDto?> UpdateAsync(int id, UpdateInvoiceDto dto);
     Task<InvoiceResponseDto?> UpdateStatusAsync(int id, InvoiceStatus status);
     Task<bool> DeleteAsync(int id);

@@ -63,6 +63,55 @@ public class InvoiceService : IInvoiceService
         return invoices.Select(MapToResponseDto);
     }
 
+
+    public async Task<InvoicePagedResponseDto> GetPagedAsync(GetInvoicesQueryDto query)
+    {
+        var q = _context.Invoices
+            .Include(i => i.Rows)
+            .AsQueryable();
+
+        if (!query.IncludeArchived)
+            q = q.Where(i => i.DeletedAt == null);
+
+        if (query.CustomerId.HasValue)
+            q = q.Where(i => i.CustomerId == query.CustomerId.Value);
+
+        if (query.Status.HasValue)
+            q = q.Where(i => i.Status == query.Status.Value);
+
+        if (query.DateFrom.HasValue)
+            q = q.Where(i => i.StartDate >= query.DateFrom.Value);
+
+        if (query.DateTo.HasValue)
+            q = q.Where(i => i.EndDate <= query.DateTo.Value);
+
+        q = query.SortBy.ToLower() switch
+        {
+            "startdate" => query.SortDirection.ToLower() == "desc" ? q.OrderByDescending(i => i.StartDate) : q.OrderBy(i => i.StartDate),
+            "enddate" => query.SortDirection.ToLower() == "desc" ? q.OrderByDescending(i => i.EndDate) : q.OrderBy(i => i.EndDate),
+            "totalsum" => query.SortDirection.ToLower() == "desc" ? q.OrderByDescending(i => i.TotalSum) : q.OrderBy(i => i.TotalSum),
+            "status" => query.SortDirection.ToLower() == "desc" ? q.OrderByDescending(i => i.Status) : q.OrderBy(i => i.Status),
+            "updatedat" => query.SortDirection.ToLower() == "desc" ? q.OrderByDescending(i => i.UpdatedAt) : q.OrderBy(i => i.UpdatedAt),
+            _ => query.SortDirection.ToLower() == "desc" ? q.OrderByDescending(i => i.CreatedAt) : q.OrderBy(i => i.CreatedAt),
+        };
+
+        var totalCount = await q.CountAsync();
+
+        var items = await q
+            .Skip((query.Page - 1) * query.PageSize)
+            .Take(query.PageSize)
+            .ToListAsync();
+
+        return new InvoicePagedResponseDto
+        {
+            Items = items.Select(MapToResponseDto).ToList(),
+            TotalCount = totalCount,
+            Page = query.Page,
+            PageSize = query.PageSize
+        };
+    }
+
+
     public async Task<InvoiceResponseDto?> UpdateAsync(int id, UpdateInvoiceDto dto)
     {
         var invoice = await _context.Invoices

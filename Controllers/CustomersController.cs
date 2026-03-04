@@ -26,10 +26,12 @@ public class CustomersController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<CustomerResponseDto>>> GetAll()
+    public async Task<ActionResult<CustomerPagedResponseDto>> GetAll([FromQuery] GetCustomersQueryDto query)
     {
-        var projects = await _customerService.GetAllAsync();
-        return Ok(projects);
+        if (!ModelState.IsValid) return BadRequest(ModelState);
+
+        var result = await _customerService.GetPagedAsync(query);
+        return Ok(result);
     }
 
     [HttpPost]

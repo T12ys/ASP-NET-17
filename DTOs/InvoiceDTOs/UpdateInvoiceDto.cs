@@ -1,9 +1,7 @@
-﻿// DTOs/InvoiceDTOs/UpdateInvoiceDto.cs
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace ASP_09._Swagger_documentation.DTOs.InvoiceDTOs;
 
-/// <summary>Данные для редактирования инвойса</summary>
 public class UpdateInvoiceDto
 {
     /// <summary>Начало периода работ</summary>

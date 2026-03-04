@@ -1,9 +1,7 @@
-﻿// DTOs/InvoiceDTOs/CreateInvoiceRowDto.cs
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace ASP_09._Swagger_documentation.DTOs.InvoiceDTOs;
 
-/// <summary>Строка инвойса при создании</summary>
 public class CreateInvoiceRowDto
 {
     /// <summary>Название работы</summary>

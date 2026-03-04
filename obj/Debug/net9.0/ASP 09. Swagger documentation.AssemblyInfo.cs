@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ASP 09. Swagger documentation")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+eb03a1c5bb3df7ad2a667be5f01aa79e640560b1")]
 [assembly: System.Reflection.AssemblyProductAttribute("ASP 09. Swagger documentation")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ASP 09. Swagger documentation")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

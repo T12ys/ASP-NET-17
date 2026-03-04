@@ -167,3 +167,7 @@ C:\Users\User\source\repos\ASP 09. Swagger documentation\ASP 09. Swagger documen
 C:\Users\User\source\repos\ASP 09. Swagger documentation\ASP 09. Swagger documentation\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 C:\Users\User\source\repos\ASP 09. Swagger documentation\ASP 09. Swagger documentation\bin\Debug\net9.0\ASP 09. Swagger documentation.xml
 C:\Users\User\source\repos\ASP 09. Swagger documentation\ASP 09. Swagger documentation\obj\Debug\net9.0\ASP 09. Swagger documentation.xml
+C:\Users\User\source\repos\ASP 09. Swagger documentation\ASP 09. Swagger documentation\bin\Debug\net9.0\FluentValidation.dll
+C:\Users\User\source\repos\ASP 09. Swagger documentation\ASP 09. Swagger documentation\bin\Debug\net9.0\FluentValidation.AspNetCore.dll
+C:\Users\User\source\repos\ASP 09. Swagger documentation\ASP 09. Swagger documentation\bin\Debug\net9.0\FluentValidation.DependencyInjectionExtensions.dll
+C:\Users\User\source\repos\ASP 09. Swagger documentation\ASP 09. Swagger documentation\obj\Debug\net9.0\ASP 09. Swagger documentation.sourcelink.json

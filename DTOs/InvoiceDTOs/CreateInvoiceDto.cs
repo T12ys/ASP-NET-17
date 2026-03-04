@@ -1,9 +1,7 @@
-﻿// DTOs/InvoiceDTOs/CreateInvoiceDto.cs
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace ASP_09._Swagger_documentation.DTOs.InvoiceDTOs;
 
-/// <summary>Данные для создания инвойса</summary>
 public class CreateInvoiceDto
 {
     /// <summary>ID клиента</summary>

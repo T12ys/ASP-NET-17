@@ -128,32 +128,83 @@
         "tags": [
           "Customers"
         ],
+        "parameters": [
+          {
+            "name": "Page",
+            "in": "query",
+            "description": "Номер страницы (начиная с 1)",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "description": "Количество элементов на странице (1-100)",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Name",
+            "in": "query",
+            "description": "Фильтр по имени (частичное совпадение)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Email",
+            "in": "query",
+            "description": "Фильтр по email (частичное совпадение)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "IncludeArchived",
+            "in": "query",
+            "description": "Включить архивированных клиентов",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "SortBy",
+            "in": "query",
+            "description": "Поле сортировки: name, email, createdAt, updatedAt",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "SortDirection",
+            "in": "query",
+            "description": "Направление сортировки: asc, desc",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "text/plain": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/CustomerResponseDto"
-                  }
+                  "$ref": "#/components/schemas/CustomerPagedResponseDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/CustomerResponseDto"
-                  }
+                  "$ref": "#/components/schemas/CustomerPagedResponseDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/CustomerResponseDto"
-                  }
+                  "$ref": "#/components/schemas/CustomerPagedResponseDto"
                 }
               }
             }
@@ -235,32 +286,102 @@
         "tags": [
           "Invoices"
         ],
+        "parameters": [
+          {
+            "name": "Page",
+            "in": "query",
+            "description": "Номер страницы (начиная с 1)",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "description": "Количество элементов на странице (1-100)",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "CustomerId",
+            "in": "query",
+            "description": "Фильтр по ID клиента",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Status",
+            "in": "query",
+            "description": "Фильтр по статусу инвойса",
+            "schema": {
+              "$ref": "#/components/schemas/InvoiceStatus"
+            }
+          },
+          {
+            "name": "DateFrom",
+            "in": "query",
+            "description": "Фильтр: начало периода (StartDate >= значения)",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "DateTo",
+            "in": "query",
+            "description": "Фильтр: конец периода (EndDate <= значения)",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "IncludeArchived",
+            "in": "query",
+            "description": "Включить архивированные инвойсы",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "SortBy",
+            "in": "query",
+            "description": "Поле сортировки: createdAt, updatedAt, startDate, endDate, totalSum, status",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "SortDirection",
+            "in": "query",
+            "description": "Направление сортировки: asc, desc",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "text/plain": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/InvoiceResponseDto"
-                  }
+                  "$ref": "#/components/schemas/InvoicePagedResponseDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/InvoiceResponseDto"
-                  }
+                  "$ref": "#/components/schemas/InvoicePagedResponseDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/InvoiceResponseDto"
-                  }
+                  "$ref": "#/components/schemas/InvoicePagedResponseDto"
                 }
               }
             }
@@ -582,8 +703,7 @@
             "nullable": true
           }
         },
-        "additionalProperties": false,
-        "description": "Данные для создания инвойса"
+        "additionalProperties": false
       },
       "CreateInvoiceRowDto": {
         "required": [
@@ -609,8 +729,42 @@
             "format": "double"
           }
         },
-        "additionalProperties": false,
-        "description": "Строка инвойса при создании"
+        "additionalProperties": false
+      },
+      "CustomerPagedResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CustomerResponseDto"
+            },
+            "description": "Список клиентов на текущей странице",
+            "nullable": true
+          },
+          "totalCount": {
+            "type": "integer",
+            "description": "Общее количество клиентов (без пагинации)",
+            "format": "int32"
+          },
+          "page": {
+            "type": "integer",
+            "description": "Текущая страница",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "description": "Размер страницы",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "description": "Общее количество страниц",
+            "format": "int32",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
       },
       "CustomerResponseDto": {
         "type": "object",
@@ -655,6 +809,41 @@
             "description": "Дата архивации (null если активен)",
             "format": "date-time",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "InvoicePagedResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InvoiceResponseDto"
+            },
+            "description": "Список инвойсов на текущей странице",
+            "nullable": true
+          },
+          "totalCount": {
+            "type": "integer",
+            "description": "Общее количество инвойсов (без пагинации)",
+            "format": "int32"
+          },
+          "page": {
+            "type": "integer",
+            "description": "Текущая страница",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "description": "Размер страницы",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "description": "Общее количество страниц",
+            "format": "int32",
+            "readOnly": true
           }
         },
         "additionalProperties": false
@@ -710,8 +899,7 @@
             "nullable": true
           }
         },
-        "additionalProperties": false,
-        "description": "Данные инвойса"
+        "additionalProperties": false
       },
       "InvoiceRowResponseDto": {
         "type": "object",
@@ -737,8 +925,7 @@
             "format": "double"
           }
         },
-        "additionalProperties": false,
-        "description": "Строка инвойса"
+        "additionalProperties": false
       },
       "InvoiceStatus": {
         "enum": [
@@ -801,8 +988,7 @@
             "nullable": true
           }
         },
-        "additionalProperties": false,
-        "description": "Данные для редактирования инвойса"
+        "additionalProperties": false
       },
       "UpdateInvoiceStatusDto": {
         "required": [
@@ -814,8 +1000,7 @@
             "$ref": "#/components/schemas/InvoiceStatus"
           }
         },
-        "additionalProperties": false,
-        "description": "Смена статуса инвойса"
+        "additionalProperties": false
       }
     }
   }

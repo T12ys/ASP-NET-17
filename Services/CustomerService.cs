@@ -118,7 +118,42 @@ public class CustomerService : ICustomerService
 
 
 
+    public async Task<CustomerPagedResponseDto> GetPagedAsync(GetCustomersQueryDto query)
+    {
+        var q = _context.Customers.AsQueryable();
 
+        if (!query.IncludeArchived)
+            q = q.Where(c => c.DeletedAt == null);
+
+        if (!string.IsNullOrWhiteSpace(query.Name))
+            q = q.Where(c => c.Name.Contains(query.Name));
+
+        if (!string.IsNullOrWhiteSpace(query.Email))
+            q = q.Where(c => c.Email.Contains(query.Email));
+
+        q = query.SortBy.ToLower() switch
+        {
+            "name" => query.SortDirection.ToLower() == "desc" ? q.OrderByDescending(c => c.Name) : q.OrderBy(c => c.Name),
+            "email" => query.SortDirection.ToLower() == "desc" ? q.OrderByDescending(c => c.Email) : q.OrderBy(c => c.Email),
+            "updatedat" => query.SortDirection.ToLower() == "desc" ? q.OrderByDescending(c => c.UpdatedAt) : q.OrderBy(c => c.UpdatedAt),
+            _ => query.SortDirection.ToLower() == "desc" ? q.OrderByDescending(c => c.CreatedAt) : q.OrderBy(c => c.CreatedAt),
+        };
+
+        var totalCount = await q.CountAsync();
+
+        var items = await q
+            .Skip((query.Page - 1) * query.PageSize)
+            .Take(query.PageSize)
+            .ToListAsync();
+
+        return new CustomerPagedResponseDto
+        {
+            Items = items.Select(MapToResponseDto).ToList(),
+            TotalCount = totalCount,
+            Page = query.Page,
+            PageSize = query.PageSize
+        };
+    }
 
     private CustomerResponseDto MapToResponseDto(Customer customer)
     {

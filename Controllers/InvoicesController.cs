@@ -17,10 +17,12 @@ public class InvoicesController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<InvoiceResponseDto>>> GetAll()
+    public async Task<ActionResult<InvoicePagedResponseDto>> GetAll([FromQuery] GetInvoicesQueryDto query)
     {
-        var invoices = await _invoiceService.GetAllAsync();
-        return Ok(invoices);
+        if (!ModelState.IsValid) return BadRequest(ModelState);
+
+        var result = await _invoiceService.GetPagedAsync(query);
+        return Ok(result);
     }
 
 

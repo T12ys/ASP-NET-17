@@ -1,9 +1,7 @@
-﻿// DTOs/InvoiceDTOs/InvoiceResponseDto.cs
-using ASP_09._Swagger_documentation.Models;
+﻿using ASP_09._Swagger_documentation.Models;
 
 namespace ASP_09._Swagger_documentation.DTOs.InvoiceDTOs;
 
-/// <summary>Данные инвойса</summary>
 public class InvoiceResponseDto
 {
     public int Id { get; set; }

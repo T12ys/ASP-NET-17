@@ -17,4 +17,5 @@ public interface ICustomerService
 
     Task<IEnumerable<CustomerResponseDto>> GetAllAsync();
 
+    Task<CustomerPagedResponseDto> GetPagedAsync(GetCustomersQueryDto query);
 }

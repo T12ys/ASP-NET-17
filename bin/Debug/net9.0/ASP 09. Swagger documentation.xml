@@ -4,6 +4,21 @@
         <name>ASP 09. Swagger documentation</name>
     </assembly>
     <members>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.CustomerDTOs.CustomerPagedResponseDto.Items">
+            <summary>Список клиентов на текущей странице</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.CustomerDTOs.CustomerPagedResponseDto.TotalCount">
+            <summary>Общее количество клиентов (без пагинации)</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.CustomerDTOs.CustomerPagedResponseDto.Page">
+            <summary>Текущая страница</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.CustomerDTOs.CustomerPagedResponseDto.PageSize">
+            <summary>Размер страницы</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.CustomerDTOs.CustomerPagedResponseDto.TotalPages">
+            <summary>Общее количество страниц</summary>
+        </member>
         <member name="P:ASP_09._Swagger_documentation.DTOs.CustomerDTOs.CustomerResponseDto.Id">
             <summary>Идентификатор</summary>
         </member>
@@ -28,8 +43,26 @@
         <member name="P:ASP_09._Swagger_documentation.DTOs.CustomerDTOs.CustomerResponseDto.DeletedAt">
             <summary>Дата архивации (null если активен)</summary>
         </member>
-        <member name="T:ASP_09._Swagger_documentation.DTOs.InvoiceDTOs.CreateInvoiceDto">
-            <summary>Данные для создания инвойса</summary>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.CustomerDTOs.GetCustomersQueryDto.Page">
+            <summary>Номер страницы (начиная с 1)</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.CustomerDTOs.GetCustomersQueryDto.PageSize">
+            <summary>Количество элементов на странице (1-100)</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.CustomerDTOs.GetCustomersQueryDto.Name">
+            <summary>Фильтр по имени (частичное совпадение)</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.CustomerDTOs.GetCustomersQueryDto.Email">
+            <summary>Фильтр по email (частичное совпадение)</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.CustomerDTOs.GetCustomersQueryDto.IncludeArchived">
+            <summary>Включить архивированных клиентов</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.CustomerDTOs.GetCustomersQueryDto.SortBy">
+            <summary>Поле сортировки: name, email, createdAt, updatedAt</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.CustomerDTOs.GetCustomersQueryDto.SortDirection">
+            <summary>Направление сортировки: asc, desc</summary>
         </member>
         <member name="P:ASP_09._Swagger_documentation.DTOs.InvoiceDTOs.CreateInvoiceDto.CustomerId">
             <summary>ID клиента</summary>
@@ -46,9 +79,6 @@
         <member name="P:ASP_09._Swagger_documentation.DTOs.InvoiceDTOs.CreateInvoiceDto.Comment">
             <summary>Комментарий</summary>
         </member>
-        <member name="T:ASP_09._Swagger_documentation.DTOs.InvoiceDTOs.CreateInvoiceRowDto">
-            <summary>Строка инвойса при создании</summary>
-        </member>
         <member name="P:ASP_09._Swagger_documentation.DTOs.InvoiceDTOs.CreateInvoiceRowDto.Service">
             <summary>Название работы</summary>
         </member>
@@ -58,14 +88,47 @@
         <member name="P:ASP_09._Swagger_documentation.DTOs.InvoiceDTOs.CreateInvoiceRowDto.Rate">
             <summary>Стоимость единицы</summary>
         </member>
-        <member name="T:ASP_09._Swagger_documentation.DTOs.InvoiceDTOs.InvoiceResponseDto">
-            <summary>Данные инвойса</summary>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.InvoiceDTOs.GetInvoicesQueryDto.Page">
+            <summary>Номер страницы (начиная с 1)</summary>
         </member>
-        <member name="T:ASP_09._Swagger_documentation.DTOs.InvoiceDTOs.InvoiceRowResponseDto">
-            <summary>Строка инвойса</summary>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.InvoiceDTOs.GetInvoicesQueryDto.PageSize">
+            <summary>Количество элементов на странице (1-100)</summary>
         </member>
-        <member name="T:ASP_09._Swagger_documentation.DTOs.InvoiceDTOs.UpdateInvoiceDto">
-            <summary>Данные для редактирования инвойса</summary>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.InvoiceDTOs.GetInvoicesQueryDto.CustomerId">
+            <summary>Фильтр по ID клиента</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.InvoiceDTOs.GetInvoicesQueryDto.Status">
+            <summary>Фильтр по статусу инвойса</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.InvoiceDTOs.GetInvoicesQueryDto.DateFrom">
+            <summary>Фильтр: начало периода (StartDate >= значения)</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.InvoiceDTOs.GetInvoicesQueryDto.DateTo">
+            <summary>Фильтр: конец периода (EndDate &lt;= значения)</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.InvoiceDTOs.GetInvoicesQueryDto.IncludeArchived">
+            <summary>Включить архивированные инвойсы</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.InvoiceDTOs.GetInvoicesQueryDto.SortBy">
+            <summary>Поле сортировки: createdAt, updatedAt, startDate, endDate, totalSum, status</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.InvoiceDTOs.GetInvoicesQueryDto.SortDirection">
+            <summary>Направление сортировки: asc, desc</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.InvoiceDTOs.InvoicePagedResponseDto.Items">
+            <summary>Список инвойсов на текущей странице</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.InvoiceDTOs.InvoicePagedResponseDto.TotalCount">
+            <summary>Общее количество инвойсов (без пагинации)</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.InvoiceDTOs.InvoicePagedResponseDto.Page">
+            <summary>Текущая страница</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.InvoiceDTOs.InvoicePagedResponseDto.PageSize">
+            <summary>Размер страницы</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.InvoiceDTOs.InvoicePagedResponseDto.TotalPages">
+            <summary>Общее количество страниц</summary>
         </member>
         <member name="P:ASP_09._Swagger_documentation.DTOs.InvoiceDTOs.UpdateInvoiceDto.StartDate">
             <summary>Начало периода работ</summary>
@@ -79,9 +142,6 @@
         <member name="P:ASP_09._Swagger_documentation.DTOs.InvoiceDTOs.UpdateInvoiceDto.Comment">
             <summary>Комментарий</summary>
         </member>
-        <member name="T:ASP_09._Swagger_documentation.DTOs.InvoiceDTOs.UpdateInvoiceStatusDto">
-            <summary>Смена статуса инвойса</summary>
-        </member>
         <member name="T:ASP_09._Swagger_documentation.Migrations.Initial">
             <inheritdoc />
         </member>
@@ -93,6 +153,18 @@
         </member>
         <member name="M:ASP_09._Swagger_documentation.Migrations.Initial.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
+        </member>
+        <member name="T:ASP_09._Swagger_documentation.Validators.GetCustomersQueryDtoValidator">
+            <summary>
+            Валидатор параметров запроса списка клиентов.
+            Проверяет корректность пагинации, сортировки и фильтров.
+            </summary>
+        </member>
+        <member name="T:ASP_09._Swagger_documentation.Validators.GetInvoicesQueryDtoValidator">
+            <summary>
+            Валидатор параметров запроса списка инвойсов.
+            Проверяет корректность пагинации, сортировки и фильтров.
+            </summary>
         </member>
     </members>
 </doc>
