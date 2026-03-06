@@ -2,8 +2,6 @@
 using ASP_09._Swagger_documentation.DTOs.CustomerDTOs;
 using ASP_09._Swagger_documentation.Models;
 using ASP_09._Swagger_documentation.Services.Interfaces;
-using ASP_09._Swagger_documentation.Data;
-using ASP_09._Swagger_documentation.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace ASP_09._Swagger_documentation.Services;
@@ -17,10 +15,11 @@ public class CustomerService : ICustomerService
         _context = context;
     }
 
-    public async Task<CustomerResponseDto> CreateAsync(CreateCustomerDto dto)
+    public async Task<CustomerResponseDto> CreateAsync(int userId, CreateCustomerDto dto)
     {
         var customer = new Customer
         {
+            UserId = userId,
             Name = dto.Name,
             Address = dto.Address,
             Email = dto.Email,
@@ -35,24 +34,20 @@ public class CustomerService : ICustomerService
         return MapToResponseDto(customer);
     }
 
-
-    public async Task<CustomerResponseDto?> GetByIdAsync(int id)
+    public async Task<CustomerResponseDto?> GetByIdAsync(int userId, int id)
     {
         var customer = await _context.Customers
-            .FirstOrDefaultAsync(c => c.Id == id && c.DeletedAt == null);
+            .FirstOrDefaultAsync(c => c.Id == id && c.UserId == userId && c.DeletedAt == null);
 
-        if (customer is null) return null;
-
-        return MapToResponseDto(customer);
+        return customer is null ? null : MapToResponseDto(customer);
     }
 
-    public async Task<CustomerResponseDto?> UpdateAsync(int id, UpdateCustomerDto dto)
+    public async Task<CustomerResponseDto?> UpdateAsync(int userId, int id, UpdateCustomerDto dto)
     {
         var customer = await _context.Customers
-            .FirstOrDefaultAsync(c => c.Id == id && c.DeletedAt == null);
+            .FirstOrDefaultAsync(c => c.Id == id && c.UserId == userId && c.DeletedAt == null);
 
-        if (customer == null)
-            return null;
+        if (customer is null) return null;
 
         customer.Name = dto.Name;
         customer.Address = dto.Address;
@@ -65,14 +60,12 @@ public class CustomerService : ICustomerService
         return MapToResponseDto(customer);
     }
 
-
-    public async Task<bool> DeleteAsync(int id)
+    public async Task<bool> DeleteAsync(int userId, int id)
     {
         var customer = await _context.Customers
-            .FirstOrDefaultAsync(c => c.Id == id);
+            .FirstOrDefaultAsync(c => c.Id == id && c.UserId == userId);
 
-        if (customer == null)
-            return false;
+        if (customer is null) return false;
 
         var hasSentInvoices = await _context.Invoices
             .AnyAsync(i =>
@@ -80,8 +73,7 @@ public class CustomerService : ICustomerService
                 i.Status != InvoiceStatus.Created &&
                 i.DeletedAt == null);
 
-        if (hasSentInvoices)
-            return false;
+        if (hasSentInvoices) return false;
 
         _context.Customers.Remove(customer);
         await _context.SaveChangesAsync();
@@ -89,14 +81,12 @@ public class CustomerService : ICustomerService
         return true;
     }
 
-
-    public async Task<bool> ArchiveAsync(int id)
+    public async Task<bool> ArchiveAsync(int userId, int id)
     {
         var customer = await _context.Customers
-            .FirstOrDefaultAsync(c => c.Id == id && c.DeletedAt == null);
+            .FirstOrDefaultAsync(c => c.Id == id && c.UserId == userId && c.DeletedAt == null);
 
-        if (customer == null)
-            return false;
+        if (customer is null) return false;
 
         customer.DeletedAt = DateTimeOffset.UtcNow;
         customer.UpdatedAt = DateTimeOffset.UtcNow;
@@ -106,21 +96,11 @@ public class CustomerService : ICustomerService
         return true;
     }
 
-
-    public async Task<IEnumerable<CustomerResponseDto>> GetAllAsync()
+    public async Task<CustomerPagedResponseDto> GetPagedAsync(int userId, GetCustomersQueryDto query)
     {
-        var customers = await _context.Customers
-            .Where(c => c.DeletedAt == null)
-            .ToListAsync();
-
-        return customers.Select(c => MapToResponseDto(c));
-    }
-
-
-
-    public async Task<CustomerPagedResponseDto> GetPagedAsync(GetCustomersQueryDto query)
-    {
-        var q = _context.Customers.AsQueryable();
+        var q = _context.Customers
+            .Where(c => c.UserId == userId)
+            .AsQueryable();
 
         if (!query.IncludeArchived)
             q = q.Where(c => c.DeletedAt == null);
@@ -155,20 +135,15 @@ public class CustomerService : ICustomerService
         };
     }
 
-    private CustomerResponseDto MapToResponseDto(Customer customer)
+    private static CustomerResponseDto MapToResponseDto(Customer c) => new()
     {
-        return new CustomerResponseDto
-        {
-            Id = customer.Id,
-            Name = customer.Name,
-            Address = customer.Address,
-            Email = customer.Email,
-            PhoneNumber = customer.PhoneNumber,
-            CreatedAt = customer.CreatedAt,
-            UpdatedAt = customer.UpdatedAt,
-            DeletedAt = customer.DeletedAt
-        };
-    }
-
-
+        Id = c.Id,
+        Name = c.Name,
+        Address = c.Address,
+        Email = c.Email,
+        PhoneNumber = c.PhoneNumber,
+        CreatedAt = c.CreatedAt,
+        UpdatedAt = c.UpdatedAt,
+        DeletedAt = c.DeletedAt
+    };
 }

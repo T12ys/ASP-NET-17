@@ -15,8 +15,15 @@ public class InvoiceService : IInvoiceService
         _context = context;
     }
 
-    public async Task<InvoiceResponseDto> CreateAsync(CreateInvoiceDto dto)
+    public async Task<InvoiceResponseDto> CreateAsync(int userId, CreateInvoiceDto dto)
     {
+        // Проверяем что клиент принадлежит этому юзеру
+        var customerExists = await _context.Customers
+            .AnyAsync(c => c.Id == dto.CustomerId && c.UserId == userId && c.DeletedAt == null);
+
+        if (!customerExists)
+            throw new KeyNotFoundException("Клиент не найден.");
+
         var rows = dto.Rows.Select(r => new InvoiceRow
         {
             Service = r.Service,
@@ -44,30 +51,21 @@ public class InvoiceService : IInvoiceService
         return MapToResponseDto(invoice);
     }
 
-    public async Task<InvoiceResponseDto?> GetByIdAsync(int id)
+    public async Task<InvoiceResponseDto?> GetByIdAsync(int userId, int id)
     {
         var invoice = await _context.Invoices
             .Include(i => i.Rows)
-            .FirstOrDefaultAsync(i => i.Id == id && i.DeletedAt == null);
+            .FirstOrDefaultAsync(i => i.Id == id && i.DeletedAt == null &&
+                _context.Customers.Any(c => c.Id == i.CustomerId && c.UserId == userId));
 
         return invoice is null ? null : MapToResponseDto(invoice);
     }
 
-    public async Task<IEnumerable<InvoiceResponseDto>> GetAllAsync()
-    {
-        var invoices = await _context.Invoices
-            .Include(i => i.Rows)
-            .Where(i => i.DeletedAt == null)
-            .ToListAsync();
-
-        return invoices.Select(MapToResponseDto);
-    }
-
-
-    public async Task<InvoicePagedResponseDto> GetPagedAsync(GetInvoicesQueryDto query)
+    public async Task<InvoicePagedResponseDto> GetPagedAsync(int userId, GetInvoicesQueryDto query)
     {
         var q = _context.Invoices
             .Include(i => i.Rows)
+            .Where(i => _context.Customers.Any(c => c.Id == i.CustomerId && c.UserId == userId))
             .AsQueryable();
 
         if (!query.IncludeArchived)
@@ -111,15 +109,10 @@ public class InvoiceService : IInvoiceService
         };
     }
 
-
-    public async Task<InvoiceResponseDto?> UpdateAsync(int id, UpdateInvoiceDto dto)
+    public async Task<InvoiceResponseDto?> UpdateAsync(int userId, int id, UpdateInvoiceDto dto)
     {
-        var invoice = await _context.Invoices
-            .Include(i => i.Rows)
-            .FirstOrDefaultAsync(i => i.Id == id && i.DeletedAt == null);
-
+        var invoice = await GetUserInvoiceAsync(userId, id);
         if (invoice is null) return null;
-
         if (invoice.Status != InvoiceStatus.Created) return null;
 
         _context.InvoiceRows.RemoveRange(invoice.Rows);
@@ -145,12 +138,9 @@ public class InvoiceService : IInvoiceService
         return MapToResponseDto(invoice);
     }
 
-    public async Task<InvoiceResponseDto?> UpdateStatusAsync(int id, InvoiceStatus status)
+    public async Task<InvoiceResponseDto?> UpdateStatusAsync(int userId, int id, InvoiceStatus status)
     {
-        var invoice = await _context.Invoices
-            .Include(i => i.Rows)
-            .FirstOrDefaultAsync(i => i.Id == id && i.DeletedAt == null);
-
+        var invoice = await GetUserInvoiceAsync(userId, id);
         if (invoice is null) return null;
 
         invoice.Status = status;
@@ -161,13 +151,10 @@ public class InvoiceService : IInvoiceService
         return MapToResponseDto(invoice);
     }
 
-    public async Task<bool> DeleteAsync(int id)
+    public async Task<bool> DeleteAsync(int userId, int id)
     {
-        var invoice = await _context.Invoices
-            .FirstOrDefaultAsync(i => i.Id == id);
-
+        var invoice = await GetUserInvoiceAsync(userId, id);
         if (invoice is null) return false;
-
         if (invoice.Status != InvoiceStatus.Created) return false;
 
         _context.Invoices.Remove(invoice);
@@ -176,11 +163,9 @@ public class InvoiceService : IInvoiceService
         return true;
     }
 
-    public async Task<bool> ArchiveAsync(int id)
+    public async Task<bool> ArchiveAsync(int userId, int id)
     {
-        var invoice = await _context.Invoices
-            .FirstOrDefaultAsync(i => i.Id == id && i.DeletedAt == null);
-
+        var invoice = await GetUserInvoiceAsync(userId, id);
         if (invoice is null) return false;
 
         invoice.DeletedAt = DateTimeOffset.UtcNow;
@@ -191,28 +176,34 @@ public class InvoiceService : IInvoiceService
         return true;
     }
 
-    private static InvoiceResponseDto MapToResponseDto(Invoice invoice)
+    // Получить инвойс только если он принадлежит юзеру
+    private async Task<Invoice?> GetUserInvoiceAsync(int userId, int id)
     {
-        return new InvoiceResponseDto
-        {
-            Id = invoice.Id,
-            CustomerId = invoice.CustomerId,
-            StartDate = invoice.StartDate,
-            EndDate = invoice.EndDate,
-            TotalSum = invoice.TotalSum,
-            Comment = invoice.Comment,
-            Status = invoice.Status,
-            CreatedAt = invoice.CreatedAt,
-            UpdatedAt = invoice.UpdatedAt,
-            DeletedAt = invoice.DeletedAt,
-            Rows = invoice.Rows.Select(r => new InvoiceRowResponseDto
-            {
-                Id = r.Id,
-                Service = r.Service,
-                Quantity = r.Quantity,
-                Rate = r.Rate,
-                Sum = r.Sum
-            }).ToList()
-        };
+        return await _context.Invoices
+            .Include(i => i.Rows)
+            .FirstOrDefaultAsync(i => i.Id == id && i.DeletedAt == null &&
+                _context.Customers.Any(c => c.Id == i.CustomerId && c.UserId == userId));
     }
+
+    private static InvoiceResponseDto MapToResponseDto(Invoice invoice) => new()
+    {
+        Id = invoice.Id,
+        CustomerId = invoice.CustomerId,
+        StartDate = invoice.StartDate,
+        EndDate = invoice.EndDate,
+        TotalSum = invoice.TotalSum,
+        Comment = invoice.Comment,
+        Status = invoice.Status,
+        CreatedAt = invoice.CreatedAt,
+        UpdatedAt = invoice.UpdatedAt,
+        DeletedAt = invoice.DeletedAt,
+        Rows = invoice.Rows.Select(r => new InvoiceRowResponseDto
+        {
+            Id = r.Id,
+            Service = r.Service,
+            Quantity = r.Quantity,
+            Rate = r.Rate,
+            Sum = r.Sum
+        }).ToList()
+    };
 }

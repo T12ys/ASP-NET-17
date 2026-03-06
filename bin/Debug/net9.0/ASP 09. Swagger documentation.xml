@@ -4,6 +4,123 @@
         <name>ASP 09. Swagger documentation</name>
     </assembly>
     <members>
+        <member name="M:ASP_09._Swagger_documentation.Controllers.AuthController.Register(ASP_09._Swagger_documentation.DTOs.AuthDTOs.RegisterDto)">
+            <summary>Регистрация нового пользователя</summary>
+        </member>
+        <member name="M:ASP_09._Swagger_documentation.Controllers.AuthController.Login(ASP_09._Swagger_documentation.DTOs.AuthDTOs.LoginDto)">
+            <summary>Вход в систему</summary>
+        </member>
+        <member name="M:ASP_09._Swagger_documentation.Controllers.AuthController.Refresh">
+            <summary>Обновить Access Token используя Refresh Token из cookie</summary>
+        </member>
+        <member name="M:ASP_09._Swagger_documentation.Controllers.AuthController.Logout">
+            <summary>Выход из системы</summary>
+        </member>
+        <member name="M:ASP_09._Swagger_documentation.Controllers.AuthController.UpdateProfile(ASP_09._Swagger_documentation.DTOs.AuthDTOs.UpdateProfileDto)">
+            <summary>Обновить профиль пользователя</summary>
+        </member>
+        <member name="M:ASP_09._Swagger_documentation.Controllers.AuthController.ChangePassword(ASP_09._Swagger_documentation.DTOs.AuthDTOs.ChangePasswordDto)">
+            <summary>Сменить пароль</summary>
+        </member>
+        <member name="M:ASP_09._Swagger_documentation.Controllers.CustomersController.GetAll(ASP_09._Swagger_documentation.DTOs.CustomerDTOs.GetCustomersQueryDto)">
+            <summary>Получить список клиентов с пагинацией, фильтрацией и сортировкой</summary>
+        </member>
+        <member name="M:ASP_09._Swagger_documentation.Controllers.CustomersController.GetById(System.Int32)">
+            <summary>Получить клиента по ID</summary>
+        </member>
+        <member name="M:ASP_09._Swagger_documentation.Controllers.CustomersController.Create(ASP_09._Swagger_documentation.DTOs.CustomerDTOs.CreateCustomerDto)">
+            <summary>Создать клиента</summary>
+        </member>
+        <member name="M:ASP_09._Swagger_documentation.Controllers.CustomersController.Update(System.Int32,ASP_09._Swagger_documentation.DTOs.CustomerDTOs.UpdateCustomerDto)">
+            <summary>Обновить клиента</summary>
+        </member>
+        <member name="M:ASP_09._Swagger_documentation.Controllers.CustomersController.Delete(System.Int32)">
+            <summary>Удалить клиента (hard delete)</summary>
+        </member>
+        <member name="M:ASP_09._Swagger_documentation.Controllers.CustomersController.Archive(System.Int32)">
+            <summary>Архивировать клиента (soft delete)</summary>
+        </member>
+        <member name="M:ASP_09._Swagger_documentation.Controllers.InvoicesController.GetAll(ASP_09._Swagger_documentation.DTOs.InvoiceDTOs.GetInvoicesQueryDto)">
+            <summary>Получить список инвойсов с пагинацией, фильтрацией и сортировкой</summary>
+        </member>
+        <member name="M:ASP_09._Swagger_documentation.Controllers.InvoicesController.GetById(System.Int32)">
+            <summary>Получить инвойс по ID</summary>
+        </member>
+        <member name="M:ASP_09._Swagger_documentation.Controllers.InvoicesController.Download(System.Int32)">
+            <summary>Скачать инвойс в формате PDF</summary>
+        </member>
+        <member name="M:ASP_09._Swagger_documentation.Controllers.InvoicesController.Create(ASP_09._Swagger_documentation.DTOs.InvoiceDTOs.CreateInvoiceDto)">
+            <summary>Создать инвойс</summary>
+        </member>
+        <member name="M:ASP_09._Swagger_documentation.Controllers.InvoicesController.Update(System.Int32,ASP_09._Swagger_documentation.DTOs.InvoiceDTOs.UpdateInvoiceDto)">
+            <summary>Обновить инвойс (только Created)</summary>
+        </member>
+        <member name="M:ASP_09._Swagger_documentation.Controllers.InvoicesController.UpdateStatus(System.Int32,ASP_09._Swagger_documentation.DTOs.InvoiceDTOs.UpdateInvoiceStatusDto)">
+            <summary>Изменить статус инвойса</summary>
+        </member>
+        <member name="M:ASP_09._Swagger_documentation.Controllers.InvoicesController.Delete(System.Int32)">
+            <summary>Удалить инвойс (hard delete, только Created)</summary>
+        </member>
+        <member name="M:ASP_09._Swagger_documentation.Controllers.InvoicesController.Archive(System.Int32)">
+            <summary>Архивировать инвойс (soft delete)</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.AuthDTOs.AuthResponseDto.AccessToken">
+            <summary>JWT Access Token</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.AuthDTOs.AuthResponseDto.AccessTokenExpiresAt">
+            <summary>Время истечения Access Token</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.AuthDTOs.AuthResponseDto.UserId">
+            <summary>ID пользователя</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.AuthDTOs.AuthResponseDto.Email">
+            <summary>Email пользователя</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.AuthDTOs.AuthResponseDto.Name">
+            <summary>Имя пользователя</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.AuthDTOs.AuthResponseDto.RefreshToken">
+            <summary>Refresh Token (также записывается в cookie)</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.AuthDTOs.ChangePasswordDto.CurrentPassword">
+            <summary>Текущий пароль</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.AuthDTOs.ChangePasswordDto.NewPassword">
+            <summary>Новый пароль</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.AuthDTOs.ChangePasswordDto.ConfirmNewPassword">
+            <summary>Подтверждение нового пароля</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.AuthDTOs.LoginDto.Email">
+            <summary>Email</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.AuthDTOs.LoginDto.Password">
+            <summary>Пароль</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.AuthDTOs.RegisterDto.Name">
+            <summary>Имя пользователя</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.AuthDTOs.RegisterDto.Email">
+            <summary>Email (используется для входа)</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.AuthDTOs.RegisterDto.Password">
+            <summary>Пароль</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.AuthDTOs.RegisterDto.Address">
+            <summary>Адрес</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.AuthDTOs.RegisterDto.PhoneNumber">
+            <summary>Номер телефона</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.AuthDTOs.UpdateProfileDto.Name">
+            <summary>Имя</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.AuthDTOs.UpdateProfileDto.Address">
+            <summary>Адрес</summary>
+        </member>
+        <member name="P:ASP_09._Swagger_documentation.DTOs.AuthDTOs.UpdateProfileDto.PhoneNumber">
+            <summary>Номер телефона</summary>
+        </member>
         <member name="P:ASP_09._Swagger_documentation.DTOs.CustomerDTOs.CustomerPagedResponseDto.Items">
             <summary>Список клиентов на текущей странице</summary>
         </member>
@@ -152,6 +269,30 @@
             <inheritdoc />
         </member>
         <member name="M:ASP_09._Swagger_documentation.Migrations.Initial.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ASP_09._Swagger_documentation.Migrations.AddUsersAndAuth">
+            <inheritdoc />
+        </member>
+        <member name="M:ASP_09._Swagger_documentation.Migrations.AddUsersAndAuth.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ASP_09._Swagger_documentation.Migrations.AddUsersAndAuth.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ASP_09._Swagger_documentation.Migrations.AddUsersAndAuth.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ASP_09._Swagger_documentation.Migrations.FixPendingChanges">
+            <inheritdoc />
+        </member>
+        <member name="M:ASP_09._Swagger_documentation.Migrations.FixPendingChanges.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ASP_09._Swagger_documentation.Migrations.FixPendingChanges.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ASP_09._Swagger_documentation.Migrations.FixPendingChanges.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
         <member name="T:ASP_09._Swagger_documentation.Validators.GetCustomersQueryDtoValidator">
