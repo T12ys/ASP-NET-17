@@ -176,7 +176,7 @@ public class InvoiceService : IInvoiceService
         return true;
     }
 
-    // Получить инвойс только если он принадлежит юзеру
+    // Получить инвойс можно только если он принадлежит юзеру
     private async Task<Invoice?> GetUserInvoiceAsync(int userId, int id)
     {
         return await _context.Invoices
